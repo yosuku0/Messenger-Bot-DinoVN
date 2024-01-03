@@ -41,7 +41,7 @@ function loadingAnimation(
 
 function doneAnimation(
   text = "",
-  loadingAnimationInstance
+  loadingAnimationInstance: any
 ) {
   clearInterval(loadingAnimationInstance);
   const currentTimeInHanoi = getCurrentTimeInHanoi();
@@ -50,7 +50,7 @@ function doneAnimation(
 
 function errAnimation(
   text = "",
-  loadingAnimationInstance
+  loadingAnimationInstance: any
 ) {
   clearInterval(loadingAnimationInstance);
   const currentTimeInHanoi = getCurrentTimeInHanoi();
