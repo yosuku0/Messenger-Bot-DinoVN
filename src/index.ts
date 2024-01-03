@@ -42,12 +42,12 @@ function main() {
     doneAnimation("Đang tạo thư mục log", loading);
   }
 
-  let loading = loadingAnimation("Đang dọn dẹp thư mục .temp");
-  const tempFiles = readdirSync("./.temp");
-  doneAnimation("Đang dọn dẹp thư mục .temp", loading);
-  for (const file of tempFiles) {
-    unlinkSync("./.temp/" + file);
-  }
+	let loading = loadingAnimation('Đang dọn dẹp thư mục .temp')
+	const tempFiles = readdirSync('./.temp')
+	for (const file of tempFiles) {
+		unlinkSync('./.temp/' + file)
+	}
+	doneAnimation('Đang dọn dẹp thư mục .temp', loading)
 
   const child = fork("./src/core/index.ts", [], {
     stdio: ["inherit", "inherit", "inherit", "pipe", "ipc"],
