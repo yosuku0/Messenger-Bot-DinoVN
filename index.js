@@ -5,7 +5,7 @@ const child = child_process.spawn("npm", ["run", "start"], {
 });
 
 child.stdout.on("data", (data) => {
-  console.log(data.toString());
+  process.stdout.write(data)
 });
 
 child.on("close", (code) => {

@@ -19,6 +19,12 @@ const colors = {
   brightWhite: "\x1B[97m",
 };
 
+function getCurrentTimeInHanoi() {
+  const utcTime = new Date();
+  const hanoiTime = new Date(utcTime.getTime() + 7 * 60 * 60 * 1000);
+  return hanoiTime;
+}
+
 function loadingAnimation(
   text = "",
   chars = ["⠙", "⠘", "⠰", "⠴", "⠤", "⠦", "⠆", "⠃", "⠋", "⠉"],
@@ -27,41 +33,47 @@ function loadingAnimation(
   let x = 0;
 
   return setInterval(function () {
-    process.stdout.write("\r" + `${colors.gray}[${colors.green}` + chars[x++] + `${colors.gray}]${colors.reset} ` + text);
-    x = x % chars.length;
+    const currentTimeInHanoi = getCurrentTimeInHanoi();
+    process.stdout.write(`\r[${colors.brightCyan}${chars[x]}${colors.reset}] ${text} - Giờ Hà Nội: ${currentTimeInHanoi.toLocaleTimeString()}    `);
+    x = (x + 1) % chars.length;
   }, delay);
 }
 
 function doneAnimation(
   text = "",
-  loadingAnimation: any
+  loadingAnimationInstance
 ) {
-  clearInterval(loadingAnimation);
-  process.stdout.write("\r" + `${colors.gray}[${colors.green}✓${colors.gray}]${colors.reset} ` + text + "\n");
+  clearInterval(loadingAnimationInstance);
+  const currentTimeInHanoi = getCurrentTimeInHanoi();
+  process.stdout.write(`\r[${colors.brightGreen}✓${colors.reset}] ${text} - Giờ Hà Nội: ${currentTimeInHanoi.toLocaleTimeString()}    \n`);
 }
 
 function errAnimation(
   text = "",
-  loadingAnimation: any
+  loadingAnimationInstance
 ) {
-  clearInterval(loadingAnimation);
-  process.stdout.write("\r" + `${colors.gray}[${colors.red}X${colors.gray}]${colors.reset} ` + text + "\n");
+  clearInterval(loadingAnimationInstance);
+  const currentTimeInHanoi = getCurrentTimeInHanoi();
+  process.stdout.write(`\r[${colors.brightRed}X${colors.reset}] ${text} - Giờ Hà Nội: ${currentTimeInHanoi.toLocaleTimeString()}    \n`);
 }
 
-console.info = (message: any, ...optionalParams: any[]) => {
-  console.log(`${colors.gray}[${colors.green}INFO${colors.gray}]${colors.reset}`, message, ...optionalParams);
+console.info = (message, ...optionalParams) => {
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`[${colors.brightGreen}INFO${colors.reset}]`, message, ...optionalParams);
 }
 
-console.error = (...data: any[]) => {
-  console.log(`${colors.gray}[${colors.red}ERROR${colors.gray}]${colors.reset}`, ...data);
+console.error = (...data) => {
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`[${colors.brightRed}ERROR${colors.reset}]`, ...data);
 }
 
-console.warn = (...data: any[]) => {
-  console.log(`${colors.gray}[${colors.yellow}WARN${colors.gray}]${colors.reset}`, ...data);
+console.warn = (...data) => {
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`[${colors.brightYellow}WARN${colors.reset}]`, ...data);
 }
 
 export {
   loadingAnimation,
   doneAnimation,
   errAnimation,
-}
+};
