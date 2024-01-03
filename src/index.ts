@@ -1,7 +1,6 @@
 import { doneAnimation, loadingAnimation } from "./module/console.ts";
 
 import { fork } from "child_process";
-
 import path from "path";
 import { existsSync, mkdirSync, readdirSync, unlinkSync } from "fs";
 
