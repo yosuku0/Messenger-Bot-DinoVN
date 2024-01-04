@@ -34,7 +34,7 @@ function loadingAnimation(
 
   return setInterval(function () {
     const currentTimeInHanoi = getCurrentTimeInHanoi();
-    process.stdout.write(`\r[${colors.brightCyan}${chars[x]}${colors.reset}] ${text} - Giờ Hà Nội: ${currentTimeInHanoi.toLocaleTimeString()}    `);
+    process.stdout.write(`\r[${colors.brightCyan}${chars[x]}${colors.reset}] ${text} - ${currentTimeInHanoi.toLocaleTimeString()}    `);
     x = (x + 1) % chars.length;
   }, delay);
 }
@@ -45,7 +45,7 @@ function doneAnimation(
 ) {
   clearInterval(loadingAnimationInstance);
   const currentTimeInHanoi = getCurrentTimeInHanoi();
-  process.stdout.write(`\r[${colors.brightGreen}✓${colors.reset}] ${text} - Giờ Hà Nội: ${currentTimeInHanoi.toLocaleTimeString()}    \n`);
+  process.stdout.write(`\r[${colors.brightGreen}✓${colors.reset}] ${text} - ${currentTimeInHanoi.toLocaleTimeString()}    \n`);
 }
 
 function errAnimation(
@@ -54,7 +54,7 @@ function errAnimation(
 ) {
   clearInterval(loadingAnimationInstance);
   const currentTimeInHanoi = getCurrentTimeInHanoi();
-  process.stdout.write(`\r[${colors.brightRed}X${colors.reset}] ${text} - Giờ Hà Nội: ${currentTimeInHanoi.toLocaleTimeString()}    \n`);
+  process.stdout.write(`\r[${colors.brightRed}X${colors.reset}] ${text} - ${currentTimeInHanoi.toLocaleTimeString()}    \n`);
 }
 
 console.info = (message, ...optionalParams) => {
