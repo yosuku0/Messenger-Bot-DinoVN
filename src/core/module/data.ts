@@ -15,6 +15,7 @@ const users = model("users", new Schema({
 const configs = model("configs", new Schema({
   _id: String,
   prefix: String,
+  guard: Boolean,
 }))
 
 const restarts = model("restarts", new Schema({

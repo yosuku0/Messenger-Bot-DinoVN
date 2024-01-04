@@ -21,7 +21,7 @@ export const command: Command = {
     }).save();
     else await configs.findByIdAndUpdate(idToUpdate, {prefix: newPrefix}); // Cập nhật giá trị prefix mới cho id đã chọn trước đó
   
-    console.log(`Đã cập nhật giá trị prefix (${newPrefix}) cho id ${idToUpdate}`);
+    console.info(`Đã cập nhật giá trị prefix (${newPrefix}) cho id ${idToUpdate}`);
     api.sendMessage(`Đã cập lưu prefix mới: \`${newPrefix}\``, event.threadID, event.messageID);
   }
 }
