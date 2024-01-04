@@ -9,7 +9,7 @@ let restartCount = 0;
 let startTime = 0;
 
 function printSleizProjectMessage() {
-  const message = "\t\tSleiz Project - Console";
+  const message = "\t\t\tSleiz Project - Console";
   let coloredMessage =
     "\x1b[96m╔════════════════════════════════════════════╗\n";
 
