@@ -40,6 +40,8 @@ export const command: Command = {
         }
       }
     }
+
+    let prefix = await getPrefix(api, event, event.threadID)
     
     try {
       const validCommands = (await Promise.all(commands)).filter(
@@ -52,7 +54,7 @@ export const command: Command = {
       const helpMessage = validCommands
         .map(
           async (command) =>
-            `🔸 *${!command.prefix ? await getPrefix(api, event, event.threadID) : ""}${command.name}* ${
+            `🔸 *${!command.prefix ? prefix : ""}${command.name}* ${
               command.aliases.length === 0
                 ? ""
                 : `[${command.aliases.join(", ")}]`
