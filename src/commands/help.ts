@@ -53,7 +53,7 @@ export const command: Command = {
 
       const helpMessage = validCommands
         .map(
-          async (command) =>
+          (command) =>
             `🔸 *${!command.prefix ? prefix : ""}${command.name}* ${
               command.aliases.length === 0
                 ? ""
