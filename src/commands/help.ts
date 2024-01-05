@@ -9,8 +9,6 @@ export const command: Command = {
   groups: "All",
   permission: "everyone",
   execute: async (api, event, args) => {
-<<<<<<< HEAD
-=======
     // api.sendMessage('pong', event.threadID, event.messageID);
     const ThreadInfo = await api.getThreadInfo(event.threadID);
 
@@ -32,7 +30,7 @@ export const command: Command = {
           commands.push({
             name: command.name,
             aliases: command.aliases,
-            description: command.description || "none",
+            description: command.description || "Không có mô tả.",
             prefix: command.prefix
             // example: command.example,
             // cooldown: command.cooldown,
@@ -42,36 +40,7 @@ export const command: Command = {
       }
     }
     
->>>>>>> public/Core
     try {
-      const ThreadInfo = await api.getThreadInfo(event.threadID);
-      const commandFiles = fs
-        .readdirSync("./src/commands/")
-        .filter((file) => file.endsWith(".ts"));
-
-      const commands = commandFiles.map(async (file) => {
-        const { command } = await import(`./${file}`);
-        if (
-          (command && command.name) ||
-          (command && command.run)
-        ) {
-          if (
-            command.permission === "everyone" ||
-            (command.permission === "admin" &&
-              ThreadInfo.adminIDs.includes(event.senderID)) ||
-            (command.permission === "owner" &&
-              event.senderID === process.env.OWNER_ID)
-          ) {
-            return {
-              name: command.name,
-              aliases: command.aliases,
-              description: command.description || "Không có mô tả.",
-            };
-          }
-        }
-        return null;
-      });
-
       const validCommands = (await Promise.all(commands)).filter(
         (command) => command !== null
       );
@@ -82,13 +51,8 @@ export const command: Command = {
       const helpMessage = validCommands
         .map(
           (command) =>
-<<<<<<< HEAD
-            `🔸 *${process.env.BOT_PERFIX}${command.name}* ${
+            `🔸 *${!command.prefix ? getPrefix(api, event, event.threadID) : ""}${command.name}* ${
               command.aliases.length === 0
-=======
-            `${!command.prefix ? getPrefix(api, event, event.threadID) : ""}${command.name} ${
-              command.aliases.length == 0
->>>>>>> public/Core
                 ? ""
                 : `[${command.aliases.join(", ")}]`
             }\n   ${command.description}`
@@ -111,10 +75,6 @@ export const command: Command = {
             : `[${com!.aliases.join(", ")}]`
         }`] = false;
       }
-
-      api.createPoll("Test", event.threadID, select, (err: any) => {
-        if (err) return console.error(err);
-      });
 
       api.setMessageReaction("✅", event.messageID, () => {}, true);
       api.sendMessage(helpWithStats, event.threadID);
