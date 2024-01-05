@@ -2,8 +2,8 @@ import { loadingAnimation, doneAnimation, errAnimation } from "./module/console.
 import "dotenv/config";
 
 // const fbchat = require("facebook-chat-api")
-// import fbchat from "@xaviabot/fca-unofficial";
-import fbchat from "nhatcoder-fb-api";
+import fbchat from "@xaviabot/fca-unofficial";
+// import fbchat from "nhatcoder-fb-api";
 import fs from "fs";
 
 import { Collection } from "@discordjs/collection";
@@ -84,7 +84,7 @@ function loadMqtt(api: api) {
     if (err) {
       console.error(err);
       handleRestartCount()
-      if(err.error == 'Not logged in') return console.log("Đã dừng thử chạy lại Mqtt vì cần thay thế appstate")
+      if(err.error == 'Not logged in') return console.error("Đã dừng thử chạy lại Mqtt vì cần thay thế appstate")
       if(restartCount > 3) return console.error("Thử chạy lại Mqtt 3 lần vẫn lỗi hãy kiểm tra lại!")
       console.info("Đang chạy lại Mqtt do lỗi")
       loadMqtt(api);
