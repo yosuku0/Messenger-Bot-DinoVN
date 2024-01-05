@@ -51,8 +51,8 @@ export const command: Command = {
 
       const helpMessage = validCommands
         .map(
-          (command) =>
-            `🔸 *${!command.prefix ? getPrefix(api, event, event.threadID) : ""}${command.name}* ${
+          async (command) =>
+            `🔸 *${!command.prefix ? await getPrefix(api, event, event.threadID) : ""}${command.name}* ${
               command.aliases.length === 0
                 ? ""
                 : `[${command.aliases.join(", ")}]`
