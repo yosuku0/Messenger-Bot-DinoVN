@@ -5,6 +5,7 @@ const tool = model(
   new Schema({
     _id: String,
     nhay: Boolean,
+    antijoin: Boolean,
   }),
 );
 

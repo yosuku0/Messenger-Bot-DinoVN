@@ -219,7 +219,7 @@ async function changeThreadName(api, title, event) {
   isChanging = false;
 }
 
-async function sleep(ms) {
+async function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 

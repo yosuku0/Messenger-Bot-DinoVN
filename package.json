@@ -19,6 +19,7 @@
     "@types/node": "^20.4.2",
     "@types/node-fetch": "^2.6.4",
     "@types/prompt-sync": "^4.2.3",
+    "@types/request": "^2.48.12",
     "console-error": "^0.0.4",
     "console-info": "^0.0.5",
     "console-warn": "^0.0.4",

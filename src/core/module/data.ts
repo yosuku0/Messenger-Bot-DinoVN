@@ -16,6 +16,7 @@ const configs = model("configs", new Schema({
   _id: String,
   prefix: String,
   guard: Boolean,
+  antijoin: Boolean,
 }))
 
 const restarts = model("restarts", new Schema({

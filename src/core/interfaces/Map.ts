@@ -59,6 +59,7 @@ export interface api {
 	events: typeof events
 	serverInstance: any,
 	uptime: number,
+  global: any,
 
 	// fb: FbApi,
 	/**

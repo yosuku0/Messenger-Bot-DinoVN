@@ -1,21 +1,15 @@
 import { Event } from "../core/interfaces/index.ts";
-import { configs } from "../core/module/data.ts";
-import {readFileSync, writeFileSync} from "fs";
-import resolve from "path";
+import { tool } from "../module/data.ts";
 
 export const event: Event = {
   name: ["event"],
-  async execute(api, event, Users) {
+  async execute(api, event) {
       const { threadID } = event;
-      const memJoin = event.logMessageData.addedParticipants.map(info => info.userFbId);
+      const memJoin = event.logMessageData.addedParticipants.map((info: any) => info.userFbId);
+    const data = await tool.findById(event.threadID)
 
       for (const idUser of memJoin) {
-        const path = resolve(__dirname, '../commands', 'cache', 'antijoin.json');
-        const { antijoin } = require(path);
-
-        const dataJson = JSON.parse(readFileSync(path, "utf-8"));
-
-        if (antijoin.hasOwnProperty(threadID) && antijoin[threadID] === true) {
+        if (data && data.antijoin) {
           try {
             setTimeout(async () => {
               await api.removeUserFromGroup(idUser, event.threadID);

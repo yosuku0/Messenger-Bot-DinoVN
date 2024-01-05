@@ -74,10 +74,9 @@ const content = [
   ]
 
 export async function startSpamming(api: api, id: string) {
+  let index = 0
   let spam = setInterval(async () => {
-    let config = await tool.findById(id)
-    if(!config || !config.nhay) clearInterval(spam)
-    let index = 0
+    if(api.global.nhay && api.global.nhay.get(id) && api.global.nhay.get(id).win == true) return clearInterval(spam)
     if (index >= content.length) index = 0;
     api.sendMessage(content[index], id, () => {
       index++;

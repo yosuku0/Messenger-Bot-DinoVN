@@ -14,33 +14,35 @@ export const command: Command = {
         .readdirSync("./src/commands/")
         .filter((file) => file.endsWith(".ts"));
 
-      const commands = commandFiles
-        .map(async (file) => {
-          const { command } = await import(`./${file}`);
+      const commands = commandFiles.map(async (file) => {
+        const { command } = await import(`./${file}`);
+        if (
+          (command && command.name) ||
+          (command && command.run)
+        ) {
           if (
-            (command && command.name) ||
-            (command && command.run)
+            command.permission === "everyone" ||
+            (command.permission === "admin" &&
+              ThreadInfo.adminIDs.includes(event.senderID)) ||
+            (command.permission === "owner" &&
+              event.senderID === process.env.OWNER_ID)
           ) {
-            if (
-              command.permission === "everyone" ||
-              (command.permission === "admin" &&
-                ThreadInfo.adminIDs.includes(event.senderID)) ||
-              (command.permission === "owner" &&
-                event.senderID === process.env.OWNER_ID)
-            ) {
-              return {
-                name: command.name,
-                aliases: command.aliases,
-                description: command.description || "Không có mô tả.",
-              };
-            }
+            return {
+              name: command.name,
+              aliases: command.aliases,
+              description: command.description || "Không có mô tả.",
+            };
           }
-          return null;
-        });
+        }
+        return null;
+      });
 
       const validCommands = (await Promise.all(commands)).filter(
         (command) => command !== null
       );
+
+      const totalCommands = commandFiles.length;
+      const usableCommands = validCommands.length;
 
       const helpMessage = validCommands
         .map(
@@ -53,16 +55,29 @@ export const command: Command = {
         )
         .join("\n\n");
 
-      const framedHelpMessage = `
+      const helpWithStats = `
 ╔════════════════════════════════╗
-║         *Danh Sách Lệnh*       ║
-╠════════════════════════════════╣
-${helpMessage}
+\n${helpMessage}\n
+🚀 Số lệnh có thể sử dụng: ${usableCommands} / Tổng số lệnh gốc: ${totalCommands}\n
 ╚════════════════════════════════╝
 `;
 
+      let select: any = {};
+
+      for (let com of validCommands) {
+        select[`${command.name} ${
+          com!.aliases.length === 0
+            ? ""
+            : `[${com!.aliases.join(", ")}]`
+        }`] = false;
+      }
+
+      api.createPoll("Test", event.threadID, select, (err: any) => {
+        if (err) return console.error(err);
+      });
+
       api.setMessageReaction("✅", event.messageID, () => {}, true);
-      api.sendMessage(framedHelpMessage, event.threadID);
+      api.sendMessage(helpWithStats, event.threadID);
     } catch (error) {
       console.error(error);
       api.sendMessage(
