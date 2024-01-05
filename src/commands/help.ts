@@ -7,6 +7,7 @@ export const command: Command = {
   aliases: [],
   description: "Hiện tất cả các lệnh có thể sử dụng",
   groups: "All",
+  noPrefix: true,
   permission: "everyone",
   execute: async (api, event, args) => {
     // api.sendMessage('pong', event.threadID, event.messageID);
